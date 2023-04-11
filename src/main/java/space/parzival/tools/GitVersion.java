@@ -59,7 +59,9 @@ public class GitVersion {
      */
     public SemVer getNextVersion() {
         SemVer currentVersion = this.getLastVersion();
-        List<RevCommit> commits = this.getCommitsSince(currentVersion);
+
+        boolean doesTagExist = this.doesTagExist(currentVersion);
+        List<RevCommit> commits = doesTagExist ? this.getCommitsSince(currentVersion) : this.getAllCommits();
 
         // apply suffix depending on branch name
         try {
@@ -81,7 +83,7 @@ public class GitVersion {
         }
 
         // contains major keyword -> bump major version
-        if (commits.stream().anyMatch(c -> c.getShortMessage().matches(this.majorIdentifier)))
+        if (commits.stream().anyMatch(c -> c.getShortMessage().matches((this.majorIdentifier))))
             return currentVersion.bumpMajor();
 
         // contains minor keyword -> bump minor version
@@ -111,6 +113,19 @@ public class GitVersion {
         catch (GitAPIException e) {
             log.warn("No tags found in this repo. Falling back to version 0.0.0");
             return new SemVer("0.0.0");
+        }
+    }
+
+    public boolean doesTagExist(SemVer version) {
+        Repository repository = this.git.getRepository();
+
+        try {
+            ObjectId objectId = repository.resolve("refs/tags/%s".formatted(version.toString()));
+
+            return  objectId != null;
+        }
+        catch (IOException e) {
+            return false;
         }
     }
 
@@ -152,5 +167,18 @@ public class GitVersion {
         }
 
         return new ArrayList<>();
+    }
+
+    public List<RevCommit> getAllCommits() {
+        List<RevCommit> commits = new ArrayList<>();
+
+        try {
+            commits.addAll(StreamSupport.stream(git.log().call().spliterator(), false).toList());
+        }
+        catch (GitAPIException e) {
+            // do nothing
+        }
+
+        return commits;
     }
 }
