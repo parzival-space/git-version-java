@@ -22,8 +22,8 @@ public class Main {
 
         // get variables
         String repoPath =           cmd.hasOption("target")             ? cmd.getOptionValue("target")              : System.getProperty("user.dir"); // NOSONAR
-        String majorIdentifier =    cmd.hasOption("major-identifier")   ? cmd.getOptionValue("major-identifier")    : "breaking:";                    // NOSONAR
-        String minorIdentifier =    cmd.hasOption("minor-identifier")   ? cmd.getOptionValue("minor-identifier")    : "feature:";                     // NOSONAR
+        String majorIdentifier =    cmd.hasOption("major-identifier")   ? cmd.getOptionValue("major-identifier")    : "breaking:.*";                  // NOSONAR
+        String minorIdentifier =    cmd.hasOption("minor-identifier")   ? cmd.getOptionValue("minor-identifier")    : "feature:.*";                   // NOSONAR
         String releaseBranch =      cmd.hasOption("release-branch")     ? cmd.getOptionValue("release-branch")      : "main";                         // NOSONAR
         String developmentBranch =  cmd.hasOption("snapshot-branch")    ? cmd.getOptionValue("snapshot-branch")     : "development";                  // NOSONAR
         String snapshotSuffix =     cmd.hasOption("suffix")             ? cmd.getOptionValue("suffix")              : "SNAPSHOT";                     // NOSONAR
@@ -65,7 +65,7 @@ public class Main {
         options.addOption(Option.builder()
                 .longOpt("major-identifier")
                 .argName("regex")
-                .desc("A regex that can be used to identify commits that should bump the major version.\nDefault: 'breaking:'")
+                .desc("A regex that can be used to identify commits that should bump the major version.\nDefault: 'breaking:.*'")
                 .type(String.class)
                 .hasArg()
                 .build()
@@ -74,7 +74,7 @@ public class Main {
         options.addOption(Option.builder()
                 .longOpt("minor-identifier")
                 .argName("regex")
-                .desc("A regex that can be used to identify commits that should bump the minor version.\nDefault: 'feature:'")
+                .desc("A regex that can be used to identify commits that should bump the minor version.\nDefault: 'feature:.*'")
                 .type(String.class)
                 .hasArg()
                 .build()
