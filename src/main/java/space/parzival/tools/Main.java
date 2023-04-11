@@ -2,11 +2,9 @@ package space.parzival.tools;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.cli.*;
-import org.eclipse.jgit.revwalk.RevCommit;
 import space.parzival.tools.versioning.SemVer;
 
 import java.io.PrintWriter;
-import java.util.List;
 
 @Slf4j
 public class Main {

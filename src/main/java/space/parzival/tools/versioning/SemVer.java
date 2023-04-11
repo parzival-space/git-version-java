@@ -62,14 +62,14 @@ public class SemVer {
         }
     }
 
-    public SemVer bumpMajor() { return this.bumpMajor(1); };
-    public SemVer bumpMajor(int amount) { this.major += amount; return this; };
+    public SemVer bumpMajor() { return this.bumpMajor(1); }
+    public SemVer bumpMajor(int amount) { this.major += amount; return this; }
 
-    public SemVer bumpMinor() { return this.bumpMinor(1); };
-    public SemVer bumpMinor(int amount) { this.minor += amount; return this; };
+    public SemVer bumpMinor() { return this.bumpMinor(1); }
+    public SemVer bumpMinor(int amount) { this.minor += amount; return this; }
 
-    public SemVer bumpPatch() { return this.bumpPatch(1); };
-    public SemVer bumpPatch(int amount) { this.patch += amount; return this; };
+    public SemVer bumpPatch() { return this.bumpPatch(1); }
+    public SemVer bumpPatch(int amount) { this.patch += amount; return this; }
 
     /**
      * Checks if a given string is SemVer compliant.

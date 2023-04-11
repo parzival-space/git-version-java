@@ -138,7 +138,6 @@ public class GitVersion {
         }
 
         // get all commits
-        ;
         try {
             Iterable<RevCommit> commits = git.log()
                     .addRange(repository.resolve(lastCommit), repository.resolve("HEAD"))
