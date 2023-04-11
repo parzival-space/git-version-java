@@ -10,7 +10,7 @@ Codacy describes this project as follows:
 ## Usage
 You can display a help page by passing the `--help`, or short `-h`, argument.
 ```
-git-version v1.0-SNAPSHOT by Parzival
+git-version v0.1.0 by Parzival
 Simple tool to automate versioning of git repositories.
 
 usage: git-version [-h] [--major-identifier <regex>] [--minor-identifier <regex>] [-n] [-p] [--release-branch <name>] [-s <name>] [--snapshot-branch
@@ -18,9 +18,9 @@ usage: git-version [-h] [--major-identifier <regex>] [--minor-identifier <regex>
 
    -h,--help                                   Show this help page.
       --major-identifier <regex>               A regex that can be used to identify commits that should bump the major version.
-                                               Default: 'breaking:'
+                                               Default: 'breaking:.*'
       --minor-identifier <regex>               A regex that can be used to identify commits that should bump the minor version.
-                                               Default: 'feature:'
+                                               Default: 'feature:.*'
    -n,--no-hash                                Removes the commit hash that normally gets added to a version if you are not on the release or snapshot
                                                branch.
    -p,--previous-version                       Returns the last version instead of the next one.
