@@ -12,6 +12,7 @@ import space.parzival.tools.versioning.SemVerComparator;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
@@ -64,10 +65,10 @@ public class GitVersion {
         try {
             String branchName = git.getRepository().getBranch();
 
-            if (branchName.equals(this.releaseBranch)) {
+            if (this.releaseBranch.equals(branchName)) {
                 currentVersion.setSuffix(null);
             }
-            else if (branchName.equals(this.developmentBranch)) {
+            else if (this.developmentBranch.equals(branchName)) {
                 currentVersion.setSuffix(this.snapshotSuffix);
             }
             else {
@@ -102,7 +103,7 @@ public class GitVersion {
 
             // sort by version, oldest -> newest
             return gitTags.stream()
-                    .map((tag) -> new SemVer(tag.getName().replaceAll("^refs/tags/" ,"")))
+                    .map(tag -> new SemVer(tag.getName().replaceAll("^refs/tags/" ,"")))
                     .sorted(new SemVerComparator()) // sort tags, oldest -> newest
                     .reduce((first, second) -> second) // return only the newest
                     .orElse(new SemVer("0.0.0"));
@@ -150,6 +151,6 @@ public class GitVersion {
             log.error("Something went wrong :(", e);
         }
 
-        return null;
+        return new ArrayList<>();
     }
 }
