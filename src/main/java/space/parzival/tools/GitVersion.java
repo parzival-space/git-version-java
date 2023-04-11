@@ -125,7 +125,12 @@ public class GitVersion {
         String lastCommit;
         try {
             ObjectId objectId = repository.resolve("refs/tags/%s".formatted(version.toString()));
-            lastCommit = objectId.getName();
+
+            // if no commit was found, set to head
+            if (objectId == null)
+                lastCommit = "HEAD";
+            else
+                lastCommit = objectId.getName();
         }
         catch (IOException e) {
             log.warn("Failed to find last commit. Falling back to HEAD.");
