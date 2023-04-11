@@ -34,6 +34,7 @@ public class SemVer {
      * @param version A SemVer version string.
      */
     public void parse(String version) {
+        if (version.startsWith("v")) version = version.substring(1); // remove leading "v" that some version have
         String[] parts = version.split("-");
         String[] versionParts = parts[0].split("\\.");
 
@@ -75,6 +76,7 @@ public class SemVer {
      * @param version A SemVer version string.
      */
     public static boolean validate(String version) {
+        if (version.startsWith("v")) version = version.substring(1); // remove leading "v" that some version have
         return version.matches("^\\d+\\.\\d+\\.\\d+(?:-[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*)?");
     }
 }
