@@ -6,7 +6,7 @@ on:
       - main
       - development
     workflow_dispatch:
-      # manual dispatch allowed
+    # manual dispatch allowed
 
 jobs:
   deploy:
@@ -47,4 +47,4 @@ jobs:
           prerelease: false
           artifactErrorsFailBuild: true
           tag: v${{ env.BUILD_VERSION }}
-          artifacts: ./target/pagepulse-${{ env.BUILD_VERSION }}.jar,./target/pagepulse-${{ env.BUILD_VERSION }}-jar-with-dependencies.jar
+          artifacts: ./target/git-version-${{ env.BUILD_VERSION }}.jar,./target/git-version-${{ env.BUILD_VERSION }}-jar-with-dependencies.jar
