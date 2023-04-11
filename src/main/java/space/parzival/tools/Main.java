@@ -159,7 +159,7 @@ public class Main {
         writer.println("%s v%s by %s".formatted(appTitle, appVersion, appAuthor));
         writer.println("Simple tool to automate versioning of git repositories.");
         writer.println();
-        formatter.printUsage(writer, width, "git-version", options);
+        formatter.printUsage(writer, width, appTitle, options);
         writer.println();
         formatter.printOptions(writer, width, options, padLeft, descPad);
         writer.println();
