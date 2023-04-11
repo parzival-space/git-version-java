@@ -21,12 +21,12 @@ public class Main {
         }
 
         // get variables
-        String repoPath =           cmd.hasOption("target")             ? cmd.getOptionValue("target")              : System.getProperty("user.dir");
-        String majorIdentifier =    cmd.hasOption("major-identifier")   ? cmd.getOptionValue("major-identifier")    : "breaking:";
-        String minorIdentifier =    cmd.hasOption("minor-identifier")   ? cmd.getOptionValue("minor-identifier")    : "feature:";
-        String releaseBranch =      cmd.hasOption("release-branch")     ? cmd.getOptionValue("release-branch")      : "main";
-        String developmentBranch =  cmd.hasOption("snapshot-branch")    ? cmd.getOptionValue("snapshot-branch")     : "development";
-        String snapshotSuffix =     cmd.hasOption("suffix")             ? cmd.getOptionValue("suffix")              : "SNAPSHOT";
+        String repoPath =           cmd.hasOption("target")             ? cmd.getOptionValue("target")              : System.getProperty("user.dir"); // NOSONAR
+        String majorIdentifier =    cmd.hasOption("major-identifier")   ? cmd.getOptionValue("major-identifier")    : "breaking:";                    // NOSONAR
+        String minorIdentifier =    cmd.hasOption("minor-identifier")   ? cmd.getOptionValue("minor-identifier")    : "feature:";                     // NOSONAR
+        String releaseBranch =      cmd.hasOption("release-branch")     ? cmd.getOptionValue("release-branch")      : "main";                         // NOSONAR
+        String developmentBranch =  cmd.hasOption("snapshot-branch")    ? cmd.getOptionValue("snapshot-branch")     : "development";                  // NOSONAR
+        String snapshotSuffix =     cmd.hasOption("suffix")             ? cmd.getOptionValue("suffix")              : "SNAPSHOT";                     // NOSONAR
         boolean addCommitHash =     !cmd.hasOption("no-hash");
         boolean previousVersion =   cmd.hasOption("previous-version");
 
@@ -151,7 +151,7 @@ public class Main {
 
         // create formatter
         HelpFormatter formatter = new HelpFormatter();
-        final PrintWriter writer = new PrintWriter(System.out);
+        final PrintWriter writer = new PrintWriter(System.out); // NOSONAR
 
         // print message
         writer.println("%s v%s by %s".formatted(appTitle, appVersion, appAuthor));
