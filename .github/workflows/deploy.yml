@@ -1,0 +1,50 @@
+name: Deploy Artifacts
+
+on:
+  push:
+    branches:
+      - main
+      - development
+    workflow_dispatch:
+      # manual dispatch allowed
+
+jobs:
+  deploy:
+    name: Deploy Artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
+      - name: Package as Snapshot and get Version
+        run: |
+          mvn package
+          echo "BUILD_VERSION=$(java -jar ./target/git-version-SNAPSHOT-jar-with-dependencies.jar)" >> $GITHUB_ENV
+
+      - name: Deploy to Nexus Repository
+        run: |
+          mkdir -p ~/.m2
+          echo "<settings><servers><server><id>parzival-space</id><username>${{ secrets.NEXUS_USER }}</username><password>${{ secrets.NEXUS_PASSWORD }}</password></server></servers></settings>" > ~/.m2/settings.xml
+          mvn versions:set -DnewVersion=${{ env.BUILD_VERSION }}
+          mvn clean deploy
+
+      - name: Create Git Tag
+        if: contains(env.BUILD_VERSION, 'SNAPSHOT') == false
+        run: |
+          git tag v${{ env.BUILD_VERSION }}
+          git push origin v${{ env.BUILD_VERSION }}
+
+      - name: Create Release
+        if: contains(env.BUILD_VERSION, 'SNAPSHOT') == false
+        uses: ncipollo/release-action@v1
+        with:
+          prerelease: false
+          artifactErrorsFailBuild: true
+          tag: v${{ env.BUILD_VERSION }}
+          artifacts: ./target/pagepulse-${{ env.BUILD_VERSION }}.jar,./target/pagepulse-${{ env.BUILD_VERSION }}-jar-with-dependencies.jar
