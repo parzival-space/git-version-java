@@ -27,13 +27,6 @@ jobs:
           mvn package
           echo "BUILD_VERSION=$(java -jar ./target/git-version-SNAPSHOT-jar-with-dependencies.jar)" >> $GITHUB_ENV
 
-      - name: Deploy to Nexus Repository
-        run: |
-          mkdir -p ~/.m2
-          echo "<settings><servers><server><id>parzival-space</id><username>${{ secrets.NEXUS_USER }}</username><password>${{ secrets.NEXUS_PASSWORD }}</password></server></servers></settings>" > ~/.m2/settings.xml
-          mvn versions:set -DnewVersion=${{ env.BUILD_VERSION }}
-          mvn clean deploy
-
       - name: Create Git Tag
         if: contains(env.BUILD_VERSION, 'SNAPSHOT') == false
         run: |
