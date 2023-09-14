@@ -1,6 +1,6 @@
-name: "Git Version"
+name: "Git Version Java"
 author: "Parzival"
-description: "Semver versioning based on your repository's Git history and commit messages. A re-implementation of Codacy's git-version tool in Java with some tweaks."
+description: "A re-implementation of Codacy's git-version tool in Java with some tweaks."
 
 branding:
   icon: git-branch
