@@ -1,0 +1,50 @@
+name: "Git Version"
+author: "Parzival"
+description: "Semver versioning based on your repository's Git history and commit messages. A re-implementation of Codacy's git-version tool in Java with some tweaks."
+
+branding:
+  icon: git-branch
+  color: gray-dark
+
+inputs:
+  minor-identifier:
+    description: 'A regex that can be used to identify commits that should bump the minor version.'
+    required: true
+    default: 'feature:.*'
+  major-identifier:
+    description: 'A regex that can be used to identify commits that should bump the major version.'
+    required: true
+    default: 'breaking:.*'
+  no-hash:
+    description: 'Removes the commit hash that normally gets added to a version if you are not on the release or snapshot branch.'
+    required: true
+    default: 'false'
+  release-branch:
+    description: 'The name of the release branch.'
+    required: true
+    default: main
+  snapshot-branch:
+    description: 'The name of the snapshot branch.'
+    required: true
+    default: development
+  suffix:
+    description: 'A Suffix that will be applied to all snapshot releases.'
+    required: false
+    default: SNAPSHOT
+
+outputs:
+  version:
+    description: 'The value of the new pre-calculated tag'
+  previous-version:
+    description: 'Contains the value of previous tag, before calculating a new one'
+
+runs:
+  using: docker
+  image: '/src/action/docker/Dockerfile'
+  args:
+    - ${{ inputs.minor-identifier }}
+    - ${{ inputs.major-identifier }}
+    - ${{ inputs.no-hash }}
+    - ${{ inputs.release-branch }}
+    - ${{ inputs.snapshot-branch }}
+    - ${{ inputs.suffix }}
